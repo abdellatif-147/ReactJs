@@ -27,6 +27,7 @@ const Book = ({ book, selectBook }) => {
           <div className="book-shelf-changer">
             <select
               onChange={(e) => {
+                setShelf(e.target.value);
                 selectBook(e, book);
               }}
               value={shelf}
