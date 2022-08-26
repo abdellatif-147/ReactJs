@@ -18,26 +18,33 @@ function App() {
     getAllbooks();
   }, []);
   useEffect(() => {
-    const getSearchData = async () => {
-      let res = await BooksApi.search(query.trim(), 30);
-      setSearchResult((Array.isArray(res) && res) || []);
+    let mounted = true;
+    if (mounted) {
+      const getSearchData = async () => {
+        let res = await BooksApi.search(query.trim(), 30);
+        setSearchResult((Array.isArray(res) && res) || []);
+      };
+      getSearchData();
+    }
+    return () => {
+      mounted = false;
     };
-    getSearchData();
   }, [query, Books]);
   const selectBookfromList = async (e, book) => {
     book.shelf = e.target.value;
     BooksApi.update(book, e.target.value).then(() => {
-      if(e.target.value === 'none'){
+      if (e.target.value === "none") {
         groupByShelf([...Books.filter((b) => b.id !== book.id)]);
-        return
+        return;
       }
       groupByShelf([...Books.filter((b) => b.id !== book.id), book]);
     });
   };
   const selectBookfromSearch = async (e, item) => {
     await BooksApi.update(item, e.target.value);
+    let newBooks = Books.filter((b) => b.id !== item.id);
     let Book = await BooksApi.get(item.id);
-    groupByShelf([...Books, Book]);
+    groupByShelf([...newBooks, Book]);
   };
   const updateQuery = (q) => {
     setQuery(q);

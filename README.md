@@ -8,8 +8,19 @@ Of course, you are free to start this project from scratch if you wish! Just be 
 
 To get started developing right away:
 
-- install all project dependencies with `npm install`
-- start the development server with `npm start`
+## Build Setup
+
+```bash
+
+# move to starter folder
+$ cd starter
+
+# install dependencies
+$ npm install
+
+# server will run on url : localhost:3000
+#  server port will be : 3000
+$ npm run start
 
 ## What You're Getting
 
@@ -30,8 +41,13 @@ To get started developing right away:
     │   ├── add.svg
     │   ├── arrow-back.svg
     │   └── arrow-drop-down.svg
+    ├── components # Helpful components for your app. Use at your discretion.
+    │   ├── Book.js # used for Book element
+    │   ├── ListBook.js # used to render list of Books
+    │   └── Search.js # used to render search page
     ├── index.css # Global styles. You probably won't need to change anything here.
     └── index.js # You should not need to modify this file. It is used for DOM rendering only.
+
 ```
 
 Remember that good React design practice is to create new JS files for each component and use import/require statements to include them where they are needed.
