@@ -1,14 +1,28 @@
 import * as BooksApi from "../BooksAPI";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 const Book = ({ book, selectBook }) => {
   const [shelf, setShelf] = useState("");
+  const shelfOptions = [
+    { id: 1, value: "move", text: "Move to...", disabled: true },
+    { id: 2, value: "currentlyReading", text: "Currently Reading" },
+    { id: 3, value: "wantToRead", text: "Want to Read" },
+    { id: 4, value: "read", text: "Read" },
+    { id: 5, value: "none", text: "None" },
+  ];
   useEffect(() => {
+    let mounted = true;
     const getBookbyId = async () => {
-      let res = await BooksApi.get(book.id);
-      setShelf(res.shelf);
+      if (mounted) {
+        let res = await BooksApi.get(book.id);
+        setShelf(res.shelf);
+      }
     };
     getBookbyId();
+    return () => {
+      mounted = false;
+    };
   }, [book.id]);
   return (
     <li>
@@ -32,13 +46,17 @@ const Book = ({ book, selectBook }) => {
               }}
               value={shelf}
             >
-              <option value="none" disabled>
-                Move to...
-              </option>
-              <option value="currentlyReading">Currently Reading</option>
-              <option value="wantToRead">Want to Read</option>
-              <option value="read">Read</option>
-              <option value="none">None</option>
+              {shelfOptions.map((option) => {
+                return (
+                  <option
+                    key={option.id}
+                    value={option.value}
+                    disabled={option.disabled}
+                  >
+                    {option.text}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>
@@ -53,5 +71,9 @@ const Book = ({ book, selectBook }) => {
       </div>
     </li>
   );
+};
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  selectBook: PropTypes.func.isRequired,
 };
 export default Book;

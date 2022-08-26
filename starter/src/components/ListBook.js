@@ -1,5 +1,6 @@
 import Book from "./Book";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 const ListBook = ({ selectBookfromList, shelves }) => {
   return (
     <div className="list-books">
@@ -14,7 +15,7 @@ const ListBook = ({ selectBookfromList, shelves }) => {
                 <h2 className="bookshelf-title">{shelf}</h2>
                 <div className="bookshelf-books">
                   <ol className="books-grid">
-                    {shelves[shelf].map((book) => {
+                    {shelves[shelf]?.map((book) => {
                       return (
                         <Book
                           key={book.id}
@@ -37,5 +38,9 @@ const ListBook = ({ selectBookfromList, shelves }) => {
       }
     </div>
   );
+};
+ListBook.propTypes = {
+  selectBookfromList: PropTypes.func.isRequired,
+  shelves: PropTypes.object.isRequired,
 };
 export default ListBook;

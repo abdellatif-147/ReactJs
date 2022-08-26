@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Book from "./Book";
+import PropTypes from "prop-types";
 const Search = ({ selectBookfromSearch, searchResult, updateQuery, query }) => {
   return (
     <div className="search-books">
@@ -32,4 +33,10 @@ const Search = ({ selectBookfromSearch, searchResult, updateQuery, query }) => {
     </div>
   );
 };
+Search.propTypes = {
+  selectBookfromSearch: PropTypes.func.isRequired,
+  searchResult: PropTypes.array.isRequired,
+  updateQuery: PropTypes.func.isRequired,
+  query: PropTypes.string.isRequired
+}
 export default Search;
